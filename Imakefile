@@ -13,6 +13,8 @@ LOCAL_LIBRARIES = $(XAWLIB) $(XMULIB) $(XTOOLLIB) $(XLIB)
   SYS_LIBRARIES = -lm
 
 all:: xrobots
+MANSUFFIX=6
+INSTPGMFLAGS = -s
 
 ComplexProgramTarget(xrobots)
 /*
