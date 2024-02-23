@@ -293,8 +293,10 @@ main(argc, argv)
   cleargc = XCreateGC(display, playfield,
  		 GCForeground | GCBackground | GCFunction, &gcv);
 
-  XtAddEventHandler(playfield_widget, ExposureMask, 0, redisplay_level, 0);
-  XtAddEventHandler(playfield_widget, PointerMotionMask, 0, pointer_moved, 0);
+  XtAddEventHandler(playfield_widget, ExposureMask, 0, 
+  	(XtEventHandler) redisplay_level, 0);
+  XtAddEventHandler(playfield_widget, PointerMotionMask, 0, 
+  	(XtEventHandler) pointer_moved, 0);
 
   init_pixmaps(top_shell);
 
