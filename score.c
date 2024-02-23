@@ -55,8 +55,12 @@
 #endif
 
 #include <X11/Xos.h>	/* brings in <sys/file.h> */
+#ifdef __linux__	/* ...not on Linux! */
+#include <sys/file.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "xrobots.h"
 
 /*----------------------------------------------------------------------*/
@@ -90,7 +94,7 @@ check_score(current_score)
   }
   if(scorefile) {
 #ifndef SYSV
-    flock(scorefile->_file, LOCK_UN);
+    flock(scorefile->_fileno, LOCK_UN);
 #endif
     fclose(scorefile);
     show_scores();
@@ -108,7 +112,7 @@ load_scores()
     return;
   }
 #ifndef SYSV
-  flock(scorefile->_file, LOCK_EX);
+  flock(scorefile->_fileno, LOCK_EX);
 #endif
   for(i = 0; i < MAXSCORES; i++) {
     if(!fgets(scores[i].score, 6, scorefile)) 	/* get score */
@@ -277,7 +281,7 @@ show_scores_callback()
 
   if(scorefile) {
 #ifndef SYSV
-    flock(scorefile->_file, LOCK_UN);
+    flock(scorefile->_fileno, LOCK_UN);
 #endif
     fclose(scorefile);
     show_scores();
