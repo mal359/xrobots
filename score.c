@@ -133,22 +133,22 @@ new_high_score(current_score)
   char textscore[6],
        name[26];
 
-  sprintf(textscore,"%5d",current_score);
-  strncpy(name,getenv("USER"),25);
+  snprintf(textscore, sizeof(textscore), "%5d", current_score);
+  snprintf(name, sizeof(name), "%s", getenv("USER") ? getenv("USER") : "Unknown");
 
   for(i=MAXSCORES-2;i>=0;i--)
     if( current_score < atoi(scores[i].score) ) {
-         /* move new score into i+1 slot */
-      strcpy(scores[i+1].score,textscore);
-      strcpy(scores[i+1].name,name);
-      return;
+	/* move new score into i+1 slot */
+	snprintf(scores[i + 1].score, sizeof(scores[i + 1].score), "%s", scores[i].score);
+	snprintf(scores[i + 1].name, sizeof(scores[i + 1].name), "%s", scores[i].name);
     } else {
-      strcpy(scores[i+1].score,scores[i].score);
-      strcpy(scores[i+1].name,scores[i].name);
+	snprintf(scores[i + 1].score, sizeof(scores[i + 1].score), "%s", textscore);
+	snprintf(scores[i + 1].name, sizeof(scores[i + 1].name), "%s", name);
+	return;
     }
   /* if it got here, there is a new number 1 score */
-  strcpy(scores[0].score,textscore);
-  strcpy(scores[0].name,name);
+  snprintf(scores[0].score, sizeof(scores[0].score), "%s", textscore);
+  snprintf(scores[0].name, sizeof(scores[0].name), "%s", name);
 
 }
 
@@ -262,7 +262,7 @@ show_scores()
   Arg tmp_arg;
 
   for(i = 0;i<MAXSCORES;i++) {
-    sprintf(tmp_str,"%5s  %25s", scores[i].score, scores[i].name);
+    snprintf(tmp_str, sizeof(tmp_str), "%5s  %25s", scores[i].score, scores[i].name);
     XtSetArg(tmp_arg,XtNlabel,tmp_str);
     XtSetValues(score_labels[i],&tmp_arg,1);
   }

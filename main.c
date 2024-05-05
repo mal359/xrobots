@@ -324,7 +324,7 @@ update_score(score)
   int score;
 {
   char text[13];
-  (void)sprintf(text,"Score: %4d",score);
+  (void)snprintf(text, sizeof(text), "Score: %4d",score);
   XtSetArg(arglistscore_command[0],XtNlabel,text);
   XtSetValues(score_command,arglistscore_command,1);
 }

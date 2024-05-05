@@ -9,7 +9,7 @@
 #
         INCDIR		= /usr/include/X11
         LIBDIR		= /usr/lib/x86_64-linux-gnu
-        LIBS		= -lXaw3d -lXt -lXmu -lX11 -lm
+        LIBS		= -lXaw -lXt -lXmu -lX11 -lm
 
 #
 # if you plan on installing it...
